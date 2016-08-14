@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.jms.Destination;
 import javax.jms.JMSContext;
 import javax.jms.JMSDestinationDefinition;
 import javax.jms.JMSDestinationDefinitions;
@@ -13,6 +14,7 @@ import javax.jms.Queue;
 import javax.jms.Topic;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @JMSDestinationDefinitions(
 	    value = {
@@ -47,7 +49,7 @@ import java.io.IOException;
 		            destinationName = "MdbVenda"
 		        )
 	    })
-@WebServlet(urlPatterns = "config")
+@WebServlet("/Config")
 public class Config extends HttpServlet {
 
 	private static final long serialVersionUID = -4480557914856200427L;
@@ -77,5 +79,26 @@ public class Config extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.write("<h1>Quickstart: Example demonstrates the use of <strong>JMS 2.0</strong> and <strong>EJB 3.2 Message-Driven Bean</strong> in WildFly 8.</h1>");
+        try {
+            boolean useTopic = request.getParameterMap().keySet().contains("topic");
+            final Destination destination = useTopic ? topicVenda : queuePedido;
+
+            out.write("<p>Sending messages to <em>" + destination + "</em></p>");
+            out.write("<h2>Following messages will be send to the destination:</h2>");
+            for (int i = 0; i < MSG_COUNT; i++) {
+                String text = "This is message " + (i + 1);
+                contexto.createProducer().send(destination, text);
+                out.write("Message (" + i + "): " + text + "</br>");
+            }
+            out.write("<p><i>Go to your WildFly Server console or Server log to see the result of messages processing</i></p>");
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
 	}
 }
