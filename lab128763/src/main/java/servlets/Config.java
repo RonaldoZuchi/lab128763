@@ -22,10 +22,30 @@ import java.io.IOException;
 	            destinationName = "ClasseQueue"
 	        ),
 	        @JMSDestinationDefinition(
-	            name = "java:/topic/CLASSEtopic",
+	            name = "java:/topic/MDBAuditoria",
 	            interfaceName = "javax.jms.Topic",
-	            destinationName = "ClasseTopic"
-	        )
+	            destinationName = "MdbAuditoria"
+	        ),
+	        @JMSDestinationDefinition(
+		            name = "java:/topic/MDBContabilidade",
+		            interfaceName = "javax.jms.Topic",
+		            destinationName = "MdbContabilidade"
+		        ),
+	        @JMSDestinationDefinition(
+		            name = "java:/topic/MDBFinanceiro",
+		            interfaceName = "javax.jms.Topic",
+		            destinationName = "MdbFinanceiro"
+		        ),
+	        @JMSDestinationDefinition(
+		            name = "java:/topic/MDBLog",
+		            interfaceName = "javax.jms.Topic",
+		            destinationName = "MdbLog"
+		        ),
+	        @JMSDestinationDefinition(
+		            name = "java:/topic/MDBVenda",
+		            interfaceName = "javax.jms.Topic",
+		            destinationName = "MdbVenda"
+		        )
 	    })
 @WebServlet(urlPatterns = "config")
 public class Config extends HttpServlet {
@@ -40,7 +60,19 @@ public class Config extends HttpServlet {
     @Resource(lookup = "java:/queue/CLASSEqueue")
     private Queue queuePedido;
 
-    @Resource(lookup = "java:/topic/CLASSEtopic")
+    @Resource(lookup = "java:/topic/MDBAuditoria")
+    private Topic topicAuditoria;
+
+    @Resource(lookup = "java:/topic/MDBContabilidade")
+    private Topic topicContabilidade;
+
+    @Resource(lookup = "java:/topic/MDBFinanceiro")
+    private Topic topicFinanceiro;
+
+    @Resource(lookup = "java:/topic/MDBLog")
+    private Topic topicLog;
+
+    @Resource(lookup = "java:/topic/MDBVenda")
     private Topic topicVenda;
 
 	@Override
