@@ -4,7 +4,6 @@
   <groupId>br.univel.lab128763</groupId>
   <artifactId>lab128763</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
 
       <url>http://wildfly.org</url>
     <licenses>
