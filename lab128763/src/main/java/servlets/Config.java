@@ -17,9 +17,9 @@ import java.io.IOException;
 @JMSDestinationDefinitions(
 	    value = {
 	        @JMSDestinationDefinition(
-	            name = "java:/queue/CLASSEqueue",
+	            name = "java:/queue/MDBLogistica",
 	            interfaceName = "javax.jms.Queue",
-	            destinationName = "ClasseQueue"
+	            destinationName = "MdbLogistica"
 	        ),
 	        @JMSDestinationDefinition(
 	            name = "java:/topic/MDBAuditoria",
@@ -57,7 +57,7 @@ public class Config extends HttpServlet {
     @Inject
     private JMSContext contexto;
 
-    @Resource(lookup = "java:/queue/CLASSEqueue")
+    @Resource(lookup = "java:/queue/MDBLogistica")
     private Queue queuePedido;
 
     @Resource(lookup = "java:/topic/MDBAuditoria")
