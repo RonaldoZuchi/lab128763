@@ -13,7 +13,7 @@ public class MdbVenda implements MessageListener{
 
 	@Override
 	public void onMessage(Message arg0) {
-		// TODO Auto-generated method stub
+
 
 	}
 

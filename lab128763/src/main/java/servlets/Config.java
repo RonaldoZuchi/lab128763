@@ -81,23 +81,23 @@ public class Config extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.write("<h1>Quickstart: Example demonstrates the use of <strong>JMS 2.0</strong> and <strong>EJB 3.2 Message-Driven Bean</strong> in WildFly 8.</h1>");
+        PrintWriter saida = response.getWriter();
+        saida.write("<p><i>Pedido</i></p>");
         try {
-            boolean useTopic = request.getParameterMap().keySet().contains("topic");
-            final Destination destination = useTopic ? topicVenda : queuePedido;
+            boolean useTopic = request.getParameterMap().keySet().contains("topicVenda");
+            final Destination destino = useTopic ? topicVenda : queuePedido;
 
-            out.write("<p>Sending messages to <em>" + destination + "</em></p>");
-            out.write("<h2>Following messages will be send to the destination:</h2>");
+            saida.write("<p>Enviando para <em>" + destino + "</em></p>");
+            saida.write("<h2>Mensagem: </h2>");
             for (int i = 0; i < MSG_COUNT; i++) {
-                String text = "This is message " + (i + 1);
-                contexto.createProducer().send(destination, text);
-                out.write("Message (" + i + "): " + text + "</br>");
+                String texto = "This is message " + (i + 1);
+                contexto.createProducer().send(destino, texto);
+                saida.write("Message (" + i + "): " + texto + "</br>");
             }
-            out.write("<p><i>Go to your WildFly Server console or Server log to see the result of messages processing</i></p>");
+            saida.write("<p><i>Pedido</i></p>");
         } finally {
-            if (out != null) {
-                out.close();
+            if (saida != null) {
+                saida.close();
             }
         }
 	}
