@@ -7,10 +7,13 @@ import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 
+import modelo.Entrega;
+
 @MessageDriven(name = "MdbLogistica", activationConfig = {
-	    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "queue/MDBLogistica"),
+	    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "queue/ENTREGAfila"),
 	    @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
 	    @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge")})
 public class MdbLogistica implements MessageListener {
@@ -20,26 +23,21 @@ public class MdbLogistica implements MessageListener {
 	@Override
 	public void onMessage(Message arg0) {
 
-        TextMessage msg = null;
+		ObjectMessage mensagem = (ObjectMessage) arg0;
+
         try {
             if (arg0 instanceof TextMessage) {
-                msg = (TextMessage) arg0;
-                LOGGER.info("Received Message from queue: " + msg.getText());
-                LOGGER.info("Processando");
-                for (int i=0; i<1; i++){
-                	LOGGER.info(".");
-                	try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-                }
-                LOGGER.info("Entrega Confirmada.");
+            	Entrega entrega = (Entrega) mensagem.getObject();
+            	LOGGER.info(MdbLogistica.class.toString());
+            	Thread.sleep(3000);
+            	LOGGER.info("Enviado");
             } else {
                 LOGGER.warning("Message of wrong type: " + arg0.getClass().getName());
             }
         } catch (JMSException e) {
             throw new RuntimeException(e);
+        } catch (InterruptedException e){
+        	e.printStackTrace();
         }
 
 	}

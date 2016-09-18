@@ -1,6 +1,10 @@
 package modelo;
-public class Venda {
 
+import java.io.Serializable;
+
+public class Venda implements Serializable{
+
+	private static final long serialVersionUID = -1643782299859833939L;
 	private String itens;
 	private int quantidade;
 

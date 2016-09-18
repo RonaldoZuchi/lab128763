@@ -1,6 +1,10 @@
 package modelo;
-public class Entrega {
 
+import java.io.Serializable;
+
+public class Entrega implements Serializable{
+
+	private static final long serialVersionUID = -8098902534450838983L;
 	private String endreco;
 
 	public String getEndreco() {
